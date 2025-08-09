@@ -1,1 +1,1 @@
-# OpenGL_Introduction
+# Intro_computer_graphics_projec
