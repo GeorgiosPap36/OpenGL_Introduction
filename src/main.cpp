@@ -112,28 +112,6 @@ int main() {
     glReadBuffer(GL_NONE);
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
-
-    // Generate FrameBufferObject and depth cube map for point light 
-    // in order to generate point light's soft shadows.
-    // unsigned int depthCubemap;
-    // glGenTextures(1, &depthCubemap);
-
-    // glBindTexture(GL_TEXTURE_CUBE_MAP, depthCubemap);
-    // for (unsigned int i = 0; i < 6; ++i) {
-    //     glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_DEPTH_COMPONENT, SHADOW_WIDTH, SHADOW_HEIGHT, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
-    // }
-    // glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-    // glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-    // glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-    // glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-    // glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
-    // // attach depth texture as FBO's depth buffer
-    // glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);
-    // glFramebufferTexture(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, depthCubemap, 0);
-    // glDrawBuffer(GL_NONE);
-    // glReadBuffer(GL_NONE);
-    // glBindFramebuffer(GL_FRAMEBUFFER, 1);
-
     Shader simpleDepthShader("../shaders/simpleDepthShader.vs", "../shaders/simpleDepthShader.fs");
 
     // FPS variables
@@ -250,25 +228,60 @@ void buildScene(std::vector<Primitive> &sceneObjects, std::vector<PointLight> &p
     //     glm::vec3(0.5f, 0.5f, 0.5f), false, &textureStorage[0], &textureStorage[1]);
     // sceneObjects.push_back(sphere);
 
-    Quad q(lightingShader, normalShader, 
-        glm::vec3(1, 0, -3), glm::vec3(5), glm::vec3(0, 0, 0), 
-        glm::vec2(0, 0), glm::vec2(1, 1), 
-        glm::vec3(0.8f, 0.8f, 0.8f), true, &textureStorage[0], &textureStorage[1]);
-    sceneObjects.push_back(q);
+    // Quad q(lightingShader, normalShader, 
+    //     glm::vec3(1, 0, -3), glm::vec3(5), glm::vec3(0, 0, 0), 
+    //     glm::vec2(0, 0), glm::vec2(1, 1), 
+    //     glm::vec3(0.8f, 0.8f, 0.8f), true, &textureStorage[0], &textureStorage[1]);
+    // sceneObjects.push_back(q);
 
-    Cuboid cuboid(lightingShader, normalShader, 
-        glm::vec3(0, 1, 0), glm::vec3(0.2f), glm::vec3(0), 
-        glm::vec3(1, 1, 1), glm::vec3(1, 2, 1), 
-        glm::vec3(0.5f, 0.5f, 0.5f), true, &textureStorage[0], &textureStorage[1]);
-    sceneObjects.push_back(cuboid);
+    // Cuboid cuboid(lightingShader, normalShader, 
+    //     glm::vec3(0, 1, 0), glm::vec3(0.2f), glm::vec3(0), 
+    //     glm::vec3(1, 1, 1), glm::vec3(1, 2, 1), 
+    //     glm::vec3(0.5f, 0.5f, 0.5f), true, &textureStorage[0], &textureStorage[1]);
+    // sceneObjects.push_back(cuboid);
 
-    dirLight = DirectionalLight(1, glm::vec3(1.0f), glm::vec3(0.05f), glm::vec3(0.4f), glm::vec3(0.5f), glm::vec3(0.0f, 0.0f, -1.0f));
+    // dirLight = DirectionalLight(1, glm::vec3(1.0f), glm::vec3(0.05f), glm::vec3(0.4f), glm::vec3(0.5f), glm::vec3(0.0f, 0.0f, -1.0f));
 
-    PointLight p1(1, glm::vec3(1), glm::vec3(7, 5, 0), glm::vec3(0.05f, 0.05f, 0.05f), glm::vec3(0.8f, 0.8f, 0.8f), glm::vec3(1.0f, 1.0f, 1.0f), 1.0f, 0.09f, 0.032f);
-    pointLights.push_back(p1);
+    // PointLight p1(1, glm::vec3(1), glm::vec3(7, 5, 0), glm::vec3(0.05f, 0.05f, 0.05f), glm::vec3(0.8f, 0.8f, 0.8f), glm::vec3(1.0f, 1.0f, 1.0f), 1.0f, 0.09f, 0.032f);
+    // pointLights.push_back(p1);
 
     // PointLight p2(1, glm::vec3(1), glm::vec3(-7, 5, 0), glm::vec3(0.05f, 0.05f, 0.05f), glm::vec3(0.8f, 0.8f, 0.8f), glm::vec3(1.0f, 1.0f, 1.0f), 1.0f, 0.09f, 0.032f);
     // pointLights.push_back(p2);
+
+    Quad q(lightingShader, normalShader, 
+        glm::vec3(0, 0, 0), glm::vec3(1), glm::vec3(-1.57, 0, 0), 
+        glm::vec2(0, 0), glm::vec2(10, 10), 
+        glm::vec3(1.0f), false, &textureStorage[0], &textureStorage[1]);
+    sceneObjects.push_back(q);
+
+    Quad q1(lightingShader, normalShader, 
+        glm::vec3(2, 1.5, -2), glm::vec3(1), glm::vec3(0, -0.77, 0), 
+        glm::vec2(0, 0), glm::vec2(7, 3), 
+        glm::vec3(1.0f), false, &textureStorage[0], &textureStorage[1]);
+    sceneObjects.push_back(q1);
+
+        Quad q2(lightingShader, normalShader, 
+        glm::vec3(-2, 1.5, -2), glm::vec3(1), glm::vec3(0, 0.77, 0), 
+        glm::vec2(0, 0), glm::vec2(7, 3), 
+        glm::vec3(1.0f), false, &textureStorage[0], &textureStorage[1]);
+    sceneObjects.push_back(q2);
+
+    Quad q3(lightingShader, normalShader, 
+        glm::vec3(0, 3, 0), glm::vec3(1), glm::vec3(1.57, 0, 0), 
+        glm::vec2(0, 0), glm::vec2(10, 10), 
+        glm::vec3(1.0f), false, &textureStorage[0], &textureStorage[1]);
+    sceneObjects.push_back(q3);
+
+    Sphere s(lightingShader, normalShader, 
+        glm::vec3(0, 0, 0), glm::vec3(1), glm::vec3(0), 
+        glm::vec3(0, 1.5, -1), 1, 100, 
+        glm::vec3(0.9, 0.5f, 0.7f), true, &textureStorage[0], &textureStorage[1]);
+    sceneObjects.push_back(s);
+
+    dirLight = DirectionalLight(1, glm::vec3(1.0f), glm::vec3(0.05f), glm::vec3(0.4f), glm::vec3(0.5f), glm::vec3(0.0f, -0.25f, -0.75f));
+
+    PointLight p1(1, glm::vec3(1), glm::vec3(7, 5, 0), glm::vec3(0.05f, 0.05f, 0.05f), glm::vec3(0.8f, 0.8f, 0.8f), glm::vec3(1.0f, 1.0f, 1.0f), 1.0f, 0.09f, 0.032f);
+    pointLights.push_back(p1);
 }
 
 void buildShadowMap(std::vector<Primitive> &sceneObjects, glm::mat4 lightSpaceMatrix, Shader depthShader, unsigned int &depthMapFBO) {
@@ -303,11 +316,11 @@ void renderScene(std::vector<Primitive> &sceneObjects, std::vector<PointLight> &
 
     for (int i = 0; i < sceneObjects.size(); i++) {
         glm::mat4 model = glm::mat4(1.0f);
+        model = glm::translate(model, sceneObjects[i].translation);
+        model = glm::scale(model, sceneObjects[i].scale);
         model = glm::rotate(model, sceneObjects[i].rotation.x, glm::vec3(1, 0, 0));
         model = glm::rotate(model, sceneObjects[i].rotation.y, glm::vec3(0, 1, 0));
         model = glm::rotate(model, sceneObjects[i].rotation.z, glm::vec3(0, 0, 1));
-        model = glm::translate(model, sceneObjects[i].translation);
-        model = glm::scale(model, sceneObjects[i].scale);
 
         sceneObjects[i].shader.use();
         sceneObjects[i].shader.setMat4("projection", projection);
